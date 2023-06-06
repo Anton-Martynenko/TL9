@@ -4,10 +4,12 @@ import {v1} from 'uuid';
 export type removeTaskActionType = ReturnType<typeof removeTaskAC>
 export type addTaskActionType = ReturnType<typeof addTaskAC>
 export type changeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
+export type changeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
 
 type ActionsType = removeTaskActionType
     | addTaskActionType
-    | changeTaskStatusActionType;
+    | changeTaskStatusActionType
+    | changeTaskTitleActionType;
 
 export const tasksReducer = (state: TasksStateType, action: ActionsType) => {
     switch (action.type) {
@@ -21,6 +23,10 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType) => {
             return {...state, [action.todolistId]:
                     state[action.todolistId].map(t => t.id === action.taskId
                         ? {...t, isDone: action.isDone} : t)};
+        case "CHANGE-TASK-TITLE":
+            return {...state, [action.todolistId]:
+                    state[action.todolistId].map(t => t.id === action.taskId
+                        ? {...t, title: action.newTitle} : t)};
         default:
             throw new Error("I don't understand this type")
     }
@@ -34,5 +40,8 @@ export const addTaskAC = (title: string, todolistId: string) => {
 }
 export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: string) => {
     return { type: 'CHANGE-TASK-STATUS', taskId, isDone, todolistId} as const
+}
+export const changeTaskTitleAC = (taskId: string, newTitle: string, todolistId: string) => {
+    return { type: 'CHANGE-TASK-TITLE', taskId, newTitle, todolistId} as const
 }
 
