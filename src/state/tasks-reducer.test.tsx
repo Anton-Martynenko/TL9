@@ -1,4 +1,4 @@
-import {addTaskAC, removeTaskAC, tasksReducer} from './tasks-reducer'
+import {addTaskAC, changeTaskStatusAC, removeTaskAC, tasksReducer} from './tasks-reducer'
 import { TasksStateType } from '../App'
 
 test('correct task should be deleted from correct array', () => {
@@ -75,6 +75,6 @@ test('status of specified task should be changed', () => {
 
     const endState = tasksReducer(startState, action)
 
-    expect().toBe()
-    expect().toBe()
+    expect(endState['todolistId1'][1].isDone).toBe(true)
+    expect(endState['todolistId2'][1].isDone).toBe(false)
 })
