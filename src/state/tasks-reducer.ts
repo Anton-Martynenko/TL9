@@ -12,9 +12,8 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType) => {
             return {...state,
                 [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
         case 'ADD-TASK':
-            let task = {id: v1(), title: action.title, isDone: false};
-            let todolistTasks = state[action.todolistId];
-            return {...state, [action.todolistId]: [task, ...todolistTasks]}
+            return {...state, [action.todolistId]:
+                    [{id: v1(), title: action.title, isDone: false}, ...state[action.todolistId]]};
         default:
             throw new Error("I don't understand this type")
     }
